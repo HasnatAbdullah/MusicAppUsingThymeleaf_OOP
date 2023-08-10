@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include necessary headers -->
+</head>
+<body>
+<h1>Song List</h1>
+<table>
+    <tr>
+        <th>Song Name</th>
+        <th>File Name</th>
+        <!-- Add more table headers -->
+    </tr>
+    <tr th:each="song : ${songs}">
+        <td th:text="${song.songName}"></td>
+        <td th:text="${song.fileName}"></td>
+        <!-- Add more table data -->
+        <td><a th:href="@{/playSong/{songId}(songId=${song.id})}">Play</a></td>
+    </tr>
+</table>
+</body>
+</html>

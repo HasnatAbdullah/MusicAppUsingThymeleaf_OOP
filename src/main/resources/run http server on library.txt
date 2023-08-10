@@ -1,0 +1,11 @@
+Launch your terminal.
+
+Type npm i http-server and hit Enter.
+Go to the root folder and open it.
+In this case, the root folder is where you want to store your files.
+
+ Type http-server ./
+You will see something like  http://localhost:8080 on the output screen of your terminal.
+You can retrieve everything stored here.
+For example, an image file named deepen.png can be retrieved using
+background: url('https://localhost:8080/deepen.png');

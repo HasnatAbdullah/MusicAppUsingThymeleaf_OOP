@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Song List</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Home</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/songs}">Song List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/addSong}">Add Song</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a th:href="@{/showNewArtistForm}" class="btn btn-primary btn-m">Add Artist</a>
+            <a th:href="@{/library}" class="btn btn-info btn-m ml-3">Library</a>
+            <a th:href="@{/logout}" class="btn btn-danger btn-m ml-3">LOGOUT</a>
+        </form>
+    </div>
+</nav>
+
+<div class="container" style="padding: 5px;">
+    <h1>Song List</h1>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Song Name</th>
+            <th>File Name</th>
+            <th>Location</th>
+            <th>Times Played</th>
+            <th>Library</th>
+            <th>Music Player</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="song : ${songs}">
+            <td th:text="${song.songName}"></td>
+            <td th:text="${song.fileName}"></td>
+            <td th:text="${song.songLocation}"></td>
+            <td th:text="${song.timesPlayed}"></td>
+            <td th:text="${song.library.location}"></td>
+            <td width="20%">
+                <audio controls>
+                    <source th:src="@{'http://localhost:8080/' + ${song.songLocation.substring(song.library.location.length)}}" type="audio/mp3">
+                    Your browser does not support the audio tag.
+                </audio>
+
+                <!--<audio controls>-->
+                    <!--<source th:src="@{'/audio/' + ${song.fileName}}" type="audio/mp3">-->
+                    <!--Your browser does not support the audio tag.-->
+                <!--</audio>-->
+                <div>
+                    <!--<button th:id="${'play-button-' + song.id}" th:onclick="'playSong(\'' + song.songLocation + '\')'" class="btn btn-success btn-sm">Play</button>-->
+                    <!--<button th:id="${'pause-button-' + song.id}" th:onclick="'pauseSong(\'' + song.songLocation + '\')'" class="btn btn-warning btn-sm">Pause</button>-->
+                    <!--<button th:id="${'stop-button-' + song.id}" th:onclick="'stopSong(\'' + song.songLocation + '\')'" class="btn btn-danger btn-sm">Stop</button>-->
+
+                    <!--<button th:onclick="'playSong(' + ${song.id}+ ')'" class="btn btn-success btn-sm">Play</button>-->
+                    <!--<button th:onclick="'pauseSong(' +${song.id}+ ')'" class="btn btn-warning btn-sm">Pause</button>-->
+                    <!--<button th:onclick="'stopSong(' + ${song.id}+ ')'" class="btn btn-danger btn-sm">Stop</button>-->
+                    <!--<button th:onclick="'playSong(' + song.id + ')'" class="btn btn-success btn-sm">Play</button>-->
+                    <!--<button th:onclick="'pauseSong(' + song.id + ')'" class="btn btn-warning btn-sm">Pause</button>-->
+                    <!--<button th:onclick="'stopSong(' + song.id + ')'" class="btn btn-danger btn-sm">Stop</button>-->
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <form th:action="@{/scanLibraryForSongs}" method="post">
+        <select name="libraryId" class="form-control">
+            <option th:each="library : ${libraries}" th:value="${library.id}" th:text="${library.location}"></option>
+        </select>
+        <button type="submit" class="btn btn-primary mt-3">Scan Library for Songs</button>
+    </form>
+
+
+    <!--
+    <audio controls style="width: 100%;">
+    <source src="/home/dit/Documents/Music/yt1s.com - OneRepublic Counting Stars Official Music Video.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+</audio>
+    <audio  controls="" style="width: 100%;">
+        <source src="http://pieterhordijk.com/sandbox/test.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio controls src="http://pieterhordijk.com/sandbox/test.ogg">
+        <a href="http://pieterhordijk.com/sandbox/test.ogg"> Download audio </a>
+    </audio>
+
+    -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    /* Function to play a song */
+    function playSong(songLocation) {
+        var audio = new Audio(songLocation);
+        audio.play();
+    }
+
+    /* Function to pause a song */
+    function pauseSong(songLocation) {
+        var audio = new Audio(songLocation);
+        audio.pause();
+    }
+
+    /* Function to stop a song */
+    function stopSong(songLocation) {
+        var audio = new Audio(songLocation);
+        audio.pause();
+        audio.currentTime = 0;
+    }
+</script>
+
+
+</body>
+</html>

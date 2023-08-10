@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Music Library</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a th:href="@{/showNewArtistForm}" class="btn btn-primary btn-m">Add Artist</a>
+                <!-- Add this line to navigate to the library page -->
+                <a th:href="@{/library}" class="btn btn-info btn-m ml-3">Library</a>
+
+                <a th:href="@{/logout}" class="btn btn-danger btn-m ml-3">LOGOUT</a>
+                <!-- Add the following line for the Library page -->
+            </form>
+
+        </div>
+    </nav>
+    <div style="padding:5px">
+        <div class="container mb-4" style="text-align : center;">
+            <h1> Libraries List</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="library : ${libraries}">
+                        <td th:text="${library.id}">1</td>
+                        <td th:text="${library.location}">Library Location</td>
+                        <td>
+                            <a th:href="@{/showLibraryFormForUpdate/{id}(id=${library.id})}"  class="btn btn-primary">Edit</a>
+                            <a th:href="@{/deleteLibrary/{id}(id=${library.id})}" class="btn btn-danger">Delete</a>
+                            <!-- Add this button to your Thymeleaf template -->
+                            <form th:action="@{/startHttpServer/{libraryLocation}(libraryLocation=${library.location})}" method="get">
+                                <button type="submit" class="btn btn-primary">Start HTTP Server</button>
+                            </form>
+
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <a th:href="@{/showNewLibraryForm}" class="btn btn-success">Add Library Location</a>
+            </table>
+
+        </div>
+        <!-- Similar to other templates, modify the table headers and rows accordingly -->
+
+
+
+    </div>
+</div>
+
+</body>
+</html>

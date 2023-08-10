@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP Server Started</title>
+    <!-- Add your CSS or other dependencies here -->
+</head>
+<body>
+<h1>HTTP Server Started</h1>
+<p>The HTTP server has been started in the library location:</p>
+<p th:text="${libraryLocation}"></p>
+<p>You can now access your music using the following link:</p>
+<p><a th:href="${'http://localhost:8080/' + libraryLocation}" target="_blank">Access Music</a></p>
+<!-- Add any other content you want -->
+</body>
+</html>
